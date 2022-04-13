@@ -1,2 +1,2 @@
-# quordle-wordle-share-extension
- Discord-friendly Wordle and Quordle results formatter
+# Wordle/Quordle Discord Formatter
+Copy Wordle and Quordle results formatted in a Discord-friendly, Dordle-like manner.

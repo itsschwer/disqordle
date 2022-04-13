@@ -1,8 +1,8 @@
 {
     "manifest_version": 2,
     "version": "0.0.0",
-    "name": "qw",
-    "description": "Formats Wordle and Quordle results in a Discord-friendly manner (like Dordle)",
+    "name": "Wordle/Quordle Discord Formatter",
+    "description": "Copy Wordle and Quordle results formatted in a Discord-friendly, Dordle-like manner.",
     "background": {
         "scripts": [ "background.js" ],
         "persistent": true
