@@ -1,0 +1,20 @@
+{
+    "manifest_version": 2,
+    "version": "0.0.0",
+    "name": "qw",
+    "description": "Formats Wordle and Quordle results in a Discord-friendly manner (like Dordle)",
+    "background": {
+        "scripts": [ "background.js" ],
+        "persistent": true
+    },
+    "permissions": [
+        "contextMenus",
+        "*://www.quordle.com/"
+    ],
+    "content_scripts": [
+        {
+            "matches": [ "*://www.quordle.com/*" ],
+            "js": [ "quordle.js" ]
+        }
+    ]
+}
