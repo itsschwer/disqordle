@@ -8,8 +8,7 @@
         "persistent": true
     },
     "permissions": [
-        "contextMenus",
-        "*://www.quordle.com/"
+        "contextMenus"
     ],
     "content_scripts": [
         {
