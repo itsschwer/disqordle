@@ -8,7 +8,6 @@ function format() {
     let colors = flattenColors(split);
     let words = getWords();
     let header = `${split[0]} ${guesses[0]},${guesses[1]},${guesses[2]},${guesses[3]}/9`;
-    let link = '<https://www.quordle.com/>';
 
     let out = `${header}\n`;
     for (let i = 0; i < words.length; i++) {
@@ -17,9 +16,8 @@ function format() {
         }
         else break;
     }
-    out += link;
 
-    return out;
+    return `${out}<https://www.quordle.com/>`;
 }
 
 function getGuesses(split) {
@@ -31,7 +29,7 @@ function getGuesses(split) {
     return array;
 }
 
-let convert = guess => (guess == '\uD83D') ? 'X' : guess;
+function convert(guess) { return (guess == '\uD83D') ? 'X' : guess; }
 
 function flattenColors(split) {
     let array = new Array(9);
@@ -62,7 +60,7 @@ function getWords() {
                 words[r] = rows[j].ariaLabel.slice(13, 18);
                 r++;
             }
-            else continue;
+            else break;
         }
     }
 
