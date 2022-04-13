@@ -1,7 +1,7 @@
 chrome.runtime.onInstalled.addListener(() => {
     chrome.contextMenus.create({
         documentUrlPatterns: [ "*://www.quordle.com/*" ],
-        title: "Copy formatted results",
+        title: "Copy formatted Quordle results",
         onclick: copyQuordle
     });
 })
