@@ -30,11 +30,11 @@ function format() {
                 }
             }
 
-            results += ` ||\`${letters}\`||`;
+            results += ` ||\`${letters.toUpperCase()}\`||`;
         } 
     }
 
     if (!results.includes('🟩🟩🟩🟩🟩')) guesses = 'X';
     const day = Math.floor((new Date() - new Date(2021, 5, 19)) / (1000 * 3600 * 24));
-    return `Wordle ${day} ${guesses}/6 \n${results}`;
+    return `Wordle ${day} ${guesses}/6\n${results}`;
 }
