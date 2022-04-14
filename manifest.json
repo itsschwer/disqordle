@@ -14,6 +14,10 @@
         {
             "matches": [ "*://www.quordle.com/*" ],
             "js": [ "quordle.js" ]
+        },
+        {
+            "matches": [ "*://www.nytimes.com/games/wordle/index.html" ],
+            "js": [ "wordle.js" ]
         }
     ],
     "icons": {
