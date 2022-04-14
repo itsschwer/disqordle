@@ -10,6 +10,7 @@ This extension adds a context menu item that, when clicked, formats the results 
 2. From the context menu, select:
     - *Copy formatted Wordle results* (on Wordle)
         - Can be used on either a complete or incomplete game
+        - *The settings page may briefly appear on the screen in order to check for hard mode*
     - *Copy formatted Quordle results* (on Quordle)
         - Only works on a complete game (either practice or daily)
 3. Paste into Discord for sharing
