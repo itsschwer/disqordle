@@ -3,9 +3,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 });
 
 function format() {
+    const game = document.querySelector('game-app').shadowRoot
+    const rows = game.querySelectorAll('#board game-row');
     let results = '';
     let guesses = 0;
-    const rows = document.querySelector('game-app').shadowRoot.querySelectorAll('#board game-row');
     for (let i = 0; i < rows.length; i++) {
         const letters = rows[i].getAttribute('letters');
         if (letters !== '') {
@@ -34,7 +35,8 @@ function format() {
         } 
     }
 
+    const hardMode = game.querySelector('game-settings').shadowRoot.getElementById('hard-mode').hasAttribute('checked') ? '*': '';
     if (!results.includes('🟩🟩🟩🟩🟩')) guesses = 'X';
     const day = Math.floor((new Date() - new Date(2021, 5, 19)) / (1000 * 3600 * 24));
-    return `Wordle ${day} ${guesses}/6\n${results}`;
+    return `Wordle ${day} ${guesses}/6${hardMode}\n${results}`;
 }
