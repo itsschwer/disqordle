@@ -3,6 +3,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 });
 
 function format() {
+    // Default results, line by line (revealed by 'Copy to Clipboard' button) — only works once a game is finished!
     const split = document.querySelector('textarea').innerHTML.split(/\r?\n/);
     const guesses = getGuesses(split);
     const tiles = flattenTiles(split);
