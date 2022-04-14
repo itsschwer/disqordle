@@ -35,7 +35,9 @@ function format() {
         } 
     }
 
+    game.getElementById('settings-button').click();
     const hardMode = game.querySelector('game-settings').shadowRoot.getElementById('hard-mode').hasAttribute('checked') ? '*': '';
+
     if (!results.includes('🟩🟩🟩🟩🟩')) guesses = 'X';
     const day = Math.floor((new Date() - new Date(2021, 5, 19)) / (1000 * 3600 * 24));
     return `Wordle ${day} ${guesses}/6${hardMode}\n${results}`;
