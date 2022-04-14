@@ -35,10 +35,26 @@ function format() {
         } 
     }
 
-    game.getElementById('settings-button').click();
-    const hardMode = game.querySelector('game-settings').shadowRoot.getElementById('hard-mode').hasAttribute('checked') ? '*': '';
-
     if (!results.includes('🟩🟩🟩🟩🟩')) guesses = 'X';
     const day = Math.floor((new Date() - new Date(2021, 5, 19)) / (1000 * 3600 * 24));
-    return `Wordle ${day} ${guesses}/6${hardMode}\n${results}`;
+    return `Wordle ${day} ${guesses}/6${getHardMode(game)}\n${results}`;
+}
+
+function getHardMode(root) {
+    let hardMode;
+    try {
+        // Check for hard mode
+        hardMode = root.querySelector('game-settings').shadowRoot.getElementById('hard-mode').hasAttribute('checked');
+    }
+    catch {
+        // Expected (when settings menu is closed): Uncaught TypeError: Cannot read properties of null (reading 'shadowRoot')
+        // Open the settings menu
+        root.getElementById('settings-button').click();
+        // Try checking for hard mode again
+        hardMode = root.querySelector('game-settings').shadowRoot.getElementById('hard-mode').hasAttribute('checked');
+        // Close the settings menu
+        root.querySelector('game-page').shadowRoot.querySelector('game-icon').click();
+    }
+
+    return hardMode ? '*': '';
 }
