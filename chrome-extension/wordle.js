@@ -3,43 +3,43 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 });
 
 function format() {
-    const rows = document.querySelectorAll('.Row-module_row__dEHfN');
     let results = '';
     let guesses = 0;
+    const rows = document.querySelectorAll('.Row-module_row__dEHfN');
     for (let i = 0; i < rows.length; i++) {
-        const tiles = rows[i].querySelectorAll('.Tile-module_tile__3ayIZ');
-        let word = '';
-        for (let i = 0; i < tiles.length; i++) {
-            const letter = tiles[i].innerText;
-
-            if (!letter) break;
-            if (word === '') {
-                results += '\n';
-                guesses++;
-            }
-            word += letter;
-
-            switch (tiles[i].getAttribute('data-state')) {
-                default:
-                    results += '⬛';
-                    break;
-                case 'absent':
-                    results += '⬜';
-                    break;
-                case 'present':
-                    results += '🟨';
-                    break;
-                case 'correct':
-                    results += '🟩';
-                    break;
-            }
+        const guess = getGuess(rows[i].querySelectorAll('.Tile-module_tile__3ayIZ'));
+        if (guess) {
+            results += `\n${guess}`;
+            guesses++;
         }
-        if (word) results += ` ||\`${word.toUpperCase()}\`||`;
     }
 
     if (!results.includes('🟩🟩🟩🟩🟩')) guesses = 'X';
     const day = Math.floor((new Date() - new Date(2021, 5, 19)) / (1000 * 3600 * 24));
     return `Wordle ${day} ${guesses}/6${getHardMode()}\n${results}`;
+}
+
+function getGuess(tiles) {
+    let colours = '';
+    let word = '';
+    for (let i = 0; i < tiles.length; i++) {
+        switch (tiles[i].getAttribute('data-state')) {
+            default:
+                return null;
+            case 'absent':
+                colours += '⬜';
+                break;
+            case 'present':
+                colours += '🟨';
+                break;
+            case 'correct':
+                colours += '🟩';
+                break;
+        }
+
+        word += tiles[i].innerText;
+    }
+    return `${colours} ||\`${word.toUpperCase()}\`||`;
 }
 
 function getHardMode() {
