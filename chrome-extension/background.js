@@ -4,18 +4,22 @@ chrome.browserAction.onClicked.addListener((tab) => {
     chrome.tabs.create({ url: "https://www.quordle.com", active: false });
 });
 
-chrome.contextMenus.create({
-    documentUrlPatterns: [ "*://www.quordle.com/*" ],
-    title: "Copy formatted Quordle results",
-    onclick: copyQuordle
+chrome.runtime.onInstalled.addListener(function() {
+    chrome.contextMenus.create({
+        documentUrlPatterns: [ "*://www.quordle.com/*" ],
+        title: "Copy formatted Quordle results",
+        id: "copyQuordle",
+    });
+    
+    chrome.contextMenus.create({
+        documentUrlPatterns: [ "*://www.nytimes.com/games/wordle/index.html" ],
+        title: "Copy formatted Wordle results",
+        id: "copyWordle",
+    });
+})
+
+chrome.contextMenus.onClicked.addListener(function(info, tab) {
+    if (info.menuItemId === 'copyQuordle' || info.menuItemId === 'copyWordle') {
+        chrome.tabs.sendMessage(tab.id, info.menuItemId);
+    }
 });
-
-chrome.contextMenus.create({
-    documentUrlPatterns: [ "*://www.nytimes.com/games/wordle/index.html" ],
-    title: "Copy formatted Wordle results",
-    onclick: copyWordle
-});
-
-function copyQuordle(info, tab) { chrome.tabs.sendMessage(tab.id, 'copyQuordle'); }
-
-function copyWordle(info, tab) { chrome.tabs.sendMessage(tab.id, 'copyWordle'); }

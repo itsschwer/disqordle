@@ -5,7 +5,7 @@
     "description": "Format Wordle and Quordle results in a Discord-friendly, Dordle-like manner.",
     "background": {
         "scripts": [ "background.js" ],
-        "persistent": true
+        "persistent": false
     },
     "permissions": [
         "contextMenus"
