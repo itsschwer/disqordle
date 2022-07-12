@@ -3,57 +3,59 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 });
 
 function format() {
-    const game = document.querySelector('game-app').shadowRoot
-    const rows = game.querySelectorAll('#board game-row');
+    const rows = document.querySelectorAll('.Row-module_row__dEHfN');
     let results = '';
     let guesses = 0;
     for (let i = 0; i < rows.length; i++) {
-        const letters = rows[i].getAttribute('letters');
-        if (letters !== '') {
-            guesses++;
-            results += '\n';
+        const tiles = rows[i].querySelectorAll('.Tile-module_tile__3ayIZ');
+        let word = '';
+        for (let i = 0; i < tiles.length; i++) {
+            const letter = tiles[i].innerText;
 
-            const tiles = rows[i].shadowRoot.querySelectorAll('game-tile');
-            for (let i = 0; i < tiles.length; i++) {
-                switch (tiles[i].getAttribute('evaluation')) {
-                    default:
-                        results += '⬛';
-                        break;
-                    case 'absent':
-                        results += '⬜';
-                        break;
-                    case 'present':
-                        results += '🟨';
-                        break;
-                    case 'correct':
-                        results += '🟩';
-                        break;
-                }
+            if (!letter) break;
+            if (word === '') {
+                results += '\n';
+                guesses++;
             }
+            word += letter;
 
-            results += ` ||\`${letters.toUpperCase()}\`||`;
-        } 
+            switch (tiles[i].getAttribute('data-state')) {
+                default:
+                    results += '⬛';
+                    break;
+                case 'absent':
+                    results += '⬜';
+                    break;
+                case 'present':
+                    results += '🟨';
+                    break;
+                case 'correct':
+                    results += '🟩';
+                    break;
+            }
+        }
+        if (word) results += ` ||\`${word.toUpperCase()}\`||`;
     }
 
     if (!results.includes('🟩🟩🟩🟩🟩')) guesses = 'X';
     const day = Math.floor((new Date() - new Date(2021, 5, 19)) / (1000 * 3600 * 24));
-    return `Wordle ${day} ${guesses}/6${getHardMode(game)}\n${results}`;
+    return `Wordle ${day} ${guesses}/6${getHardMode()}\n${results}`;
 }
 
-function getHardMode(root) {
+function getHardMode() {
     let hardMode;
     try {
         // Check for hard mode
-        hardMode = root.querySelector('game-settings').shadowRoot.getElementById('hard-mode').hasAttribute('checked');
+        hardMode = (document.querySelector('#hardMode button').getAttribute('aria-checked') === 'true');
     }
     catch {
         // Expected (when settings menu is closed): Uncaught TypeError: Cannot read properties of null (reading 'shadowRoot')
         // Open the settings menu
-        root.getElementById('settings-button').click();
+        document.getElementById('settings-button').click();
         // Try checking for hard mode again
-        hardMode = root.querySelector('game-settings').shadowRoot.getElementById('hard-mode').hasAttribute('checked');
+        hardMode = (document.querySelector('#hardMode button').getAttribute('aria-checked') === 'true');
         // Close the settings menu
-        root.querySelector('game-page').shadowRoot.querySelector('game-icon').click();
+        document.querySelector('button.Page-module_close__D3gaa').click();
     }
 
     return hardMode ? '*': '';
